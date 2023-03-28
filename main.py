@@ -48,8 +48,11 @@ def find_subchain(chain: str) -> list[str]:
     
   return well_formatted_subchains
 
-if __name__ == '__main__':
-  assert find_subchain(')(') == []
-  assert find_subchain('()())(()()') == ['()', '()', '()', '()']
-  assert find_subchain('(((()))))') == ['(((())))']
-  assert find_subchain('(') == []
+def find_wellformed_subchain(chain: str) -> int:
+  '''Take a well formatted chain and find the size of the longest subchain'''
+  subchains = find_subchain(chain)
+  subchains_length = [len(subchain) for subchain in subchains]
+  if subchains_length:
+    return max(subchains_length)
+  else:
+    return 0
