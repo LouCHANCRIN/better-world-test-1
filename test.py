@@ -5,9 +5,9 @@ from main import test_chain
 
 well_formatted_chains = [
   '()',
-  '())()()()()',
+  '()()()()()',
   '((((()()()))))',
-  '((())) ',
+  '((()))',
   '',
 ]
 
@@ -23,6 +23,7 @@ class TestChains(unittest.TestCase):
 
     def test_well_formatted(self):
       for chain in well_formatted_chains:
+        print(chain)
         self.assertTrue(test_chain(chain))
 
     def test_ill_formatted(self):

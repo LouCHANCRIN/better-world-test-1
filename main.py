@@ -4,8 +4,19 @@ def test_chain(chain: str) -> bool:
   A well formatted string means that all opening parenthesis are closed later on and
   all closed parenthesis are placed when there is an open parenthesis that is not closed yet
   '''
-  return False
+  opened_parenthesis = 0
+  for char in chain:
+    if char == '(':
+      opened_parenthesis += 1
+    elif char == ')':
+      if opened_parenthesis > 0:
+        opened_parenthesis -= 1
+      else:
+        return False
+    else:
+      return False
+  
+  if opened_parenthesis != 0:
+    return False
 
-
-if __name__ == "__main__":
-  test_chain()
+  return True
