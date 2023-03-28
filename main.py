@@ -20,3 +20,36 @@ def test_chain(chain: str) -> bool:
     return False
 
   return True
+
+
+def find_subchain(chain: str) -> list[str]:
+  well_formatted_subchains = []
+  opened_parenthesis = 0
+  subchain = ''
+  
+  for i in range(0, len(chain)):
+    subchain += chain[i]
+    if chain[i] == '(':
+      opened_parenthesis += 1
+    elif chain[i] == ')':
+      if opened_parenthesis > 0:
+        opened_parenthesis -= 1
+      else:
+        subchain = subchain[1:]
+        if subchain:
+          well_formatted_subchains.append(subchain[1:])
+        subchain = ''
+
+    if opened_parenthesis == 0 and subchain:
+      well_formatted_subchains.append(subchain)
+      subchain = ''
+  if opened_parenthesis > 0 and subchain:
+    well_formatted_subchains += find_subchain(subchain[1:])
+    
+  return well_formatted_subchains
+
+if __name__ == '__main__':
+  assert find_subchain(')(') == []
+  assert find_subchain('()())(()()') == ['()', '()', '()', '()']
+  assert find_subchain('(((()))))') == ['(((())))']
+  assert find_subchain('(') == []
